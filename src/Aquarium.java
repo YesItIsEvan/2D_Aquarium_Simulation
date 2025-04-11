@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 
+import static java.lang.Thread.sleep;
+
 public class Aquarium extends JPanel implements Runnable {
 
     Thread thread;
@@ -140,10 +142,7 @@ public class Aquarium extends JPanel implements Runnable {
             currentTime = System.currentTimeMillis();
             try {
                 long sleepTime = period - (currentTime - beginTime);
-                if (sleepTime > 0) {
-                    Thread.sleep(sleepTime);
-                }
-
+                if (sleepTime > 0) sleep(sleepTime);
             } catch (InterruptedException ex) {
                 throw new RuntimeException(ex);
             }
