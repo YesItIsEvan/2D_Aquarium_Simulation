@@ -144,7 +144,9 @@ public class Aquarium extends JPanel implements Runnable {
                     Thread.sleep(sleepTime);
                 }
 
-            } catch (InterruptedException ex) {}
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
             currentTime = System.currentTimeMillis();
             beginTime = currentTime;
         }
