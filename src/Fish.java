@@ -4,8 +4,8 @@ public class Fish {
 
     public double x_coordinate;
     public double y_coordinate;
-    public int x_bound = 0;
-    public int y_bound = 0;
+    public int x_bound;
+    public int y_bound;
     int repeatDirection = (int)Math.round(30*Math.random())+15;
     double[] vector = new double[2];
     double fish_speed;
@@ -27,7 +27,7 @@ public class Fish {
     public void freeroam(){
         if(repeatCycle == 0) {
             fish_direction += (Math.random()-0.5)*Math.PI;
-            fish_speed += Math.random()-0.5;
+            //fish_speed += Math.random()-0.5;
             if(fish_speed > 2||fish_speed < 0)
                 fish_speed = 1;
             if(Math.cos(fish_direction)<0)
