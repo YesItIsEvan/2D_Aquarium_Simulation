@@ -153,8 +153,8 @@ public class Aquarium extends JPanel implements Runnable {
     }
 
     public void Animate(){
-        for(int i=0;i<fish.length;i++)
-            fish[i].freeroam();
+        for (Fish fish1 : fish)
+            fish1.freeroam();
         for(Bubbles bubbles : GlupGlup)
             bubbles.floating();
     }
