@@ -7,7 +7,7 @@ public class Aquarium extends JPanel implements Runnable {
 
     Thread thread;
     Fish[] fish = new Fish[20];
-    Bubbles[] GlupGlup = new Bubbles[10];
+    Bubbles[] bubbles = new Bubbles[10];
     int tick = 0;
 
 
@@ -15,8 +15,8 @@ public class Aquarium extends JPanel implements Runnable {
         thread = new Thread(this);
         for(int i=0;i<fish.length;i++)
             fish[i] = new Fish(100+(100*Math.random()),100+(100*Math.random()),690,450);
-        for(int i=0;i<GlupGlup.length;i++)
-            GlupGlup[i] = new Bubbles(620,385,-10);
+        for(int i = 0; i< bubbles.length; i++)
+            bubbles[i] = new Bubbles(620,385,-10);
         thread.start();
     }
 
@@ -41,12 +41,13 @@ public class Aquarium extends JPanel implements Runnable {
         g.setColor(new Color(237, 201, 175));
         g.fillRect(0, 450, 700, 50);
 
-        // Sea grass clump (animated sway)
+        // Sea-grass clump (animated sway)
         int baseX = 2;
         for (int i = 0; i < 550; i++) {
-            g.setColor(new Color(34, 139+15*(int)Math.round((Math.pow(Math.sin(i),2)+Math.cos(i*i))), 34));
+            int organicVariation = (int)Math.round((Math.pow(Math.sin(i),2)+Math.cos(i*i)));
+            g.setColor(new Color(34, 139+15*organicVariation, 34));
             int sway = (int)(Math.sin(((tick) + i * 5) * 0.1) * 5);
-            g.drawLine(baseX + i, 452-(int)Math.round(Math.pow(Math.sin(i),2)+Math.cos(i*i)), baseX + i + sway + (int)Math.round(3*Math.sin(tick/128.0)), 422+((int)Math.round(4*(Math.pow(Math.sin(i),2)+Math.cos(i*i)))));
+            g.drawLine(baseX + i, 452-organicVariation, baseX + i + sway + (int)Math.round(3*Math.sin(tick/128.0)), 422+(4*(organicVariation)));
         }
 
         // vent
@@ -57,20 +58,20 @@ public class Aquarium extends JPanel implements Runnable {
 
         // BUBBLES!!!!!!!!!!!!!!!!!!
         g.setColor(Color.lightGray);
-        for(Bubbles bubbles : GlupGlup)
+        for(Bubbles bubbles : bubbles)
             g.drawOval((int)Math.round(bubbles.x)-2,(int)Math.round(bubbles.y)-2,5,5);
 
-        // Rockscape
+        // Rock scape
         g.setColor(new Color(100, 100, 100)); // dark gray
-        int[] rockpointsX = new int[]{520,515,540,545,560,580,600,610,630,645,640};
-        int[] rockpointsY = new int[]{460,450,410,390,420,390,410,380,380,440,460};
-        g.fillPolygon(rockpointsX,rockpointsY,11);
+        int[] rockPointsX = new int[]{520,515,540,545,560,580,600,610,630,645,640};
+        int[] rockPointsY = new int[]{460,450,410,390,420,390,410,380,380,440,460};
+        g.fillPolygon(rockPointsX,rockPointsY,11);
 
         // Rock holes (using background color)
         g.setColor(new Color(50, 50, 60));
-        int[] holepointsX = new int[]{535,555,550};
-        int[] holepointsY = new int[]{435,425,450};
-        g.fillPolygon(holepointsX,holepointsY,3);
+        int[] holePointsX = new int[]{535,555,550};
+        int[] holePointsY = new int[]{435,425,450};
+        g.fillPolygon(holePointsX,holePointsY,3);
 
         // Little fish hiding in a hole
         g.setColor(Color.ORANGE);
@@ -79,10 +80,10 @@ public class Aquarium extends JPanel implements Runnable {
         g.fillRect(599, 435, 2, 6); // white stripe
 
         // Anemone on the left
-        int baseAnem = 107;
+        int AnemoneStartingX = 107;
         g.setColor(new Color(255, 105, 180)); // hot pink
         for (int i = 1; i <= 27; i++) {
-            g.drawLine(baseAnem - i, 450, baseAnem - i + (int)(Math.sin((tick/2.0) * 0.1 + i) * 5), 415 - (int)Math.round(5*Math.sin(i/3.0)));
+            g.drawLine(AnemoneStartingX - i, 450, AnemoneStartingX - i + (int)(Math.sin((tick/2.0) * 0.1 + i) * 5), 415 - (int)Math.round(5*Math.sin(i/3.0)));
             if(i == 13) {
                 // Clownfish
                 g.setColor(Color.ORANGE);
@@ -96,7 +97,7 @@ public class Aquarium extends JPanel implements Runnable {
             }
         }
         g.setColor(new Color(139, 69, 19)); // brownish for rock/root base
-        g.fillOval(baseAnem-29,440,30,20);
+        g.fillOval(AnemoneStartingX -29,440,30,20);
 
 
         // More reef details could go here like shells, rocks, or bubbles
@@ -108,7 +109,7 @@ public class Aquarium extends JPanel implements Runnable {
             g.setColor(fish[i].scales);
             g.fillOval(x, y, 12, 7); // 12x7 body
 
-                // Fish tail (filled triangle)
+                // Fishtail (filled triangle)
             int[] tailX = new int[2];
             int[] tailY = {y + 3, y, y + 7};
             if(fish[i].fish_facing > 0) {
@@ -154,7 +155,7 @@ public class Aquarium extends JPanel implements Runnable {
     public void Animate(){
         for (Fish fish1 : fish)
             fish1.freeroam();
-        for(Bubbles bubbles : GlupGlup)
+        for(Bubbles bubbles : bubbles)
             bubbles.floating();
     }
 }
