@@ -123,9 +123,9 @@ public class Aquarium extends JPanel implements Runnable {
                 // Fish eye (tiny dot)
             g.setColor(Color.BLACK);
             if(fish[i].fish_facing > 0)
-                g.fillRect(x + 9, y + 3, 1, 2);
+                g.fillRect(x + 9, y + 2, 1, 2);
             if(fish[i].fish_facing < 0)
-                g.fillRect(x + 3, y + 3, 1, 2);
+                g.fillRect(x + 3, y + 2, 1, 2);
         }
     }
 
