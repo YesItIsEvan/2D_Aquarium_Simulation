@@ -65,17 +65,12 @@ public class Fish {
 
     public Color getScales(){
         int i = (int)Math.round(4*Math.random());
-        switch(i){
-            case 1:
-                return new Color(50, 205, 50);
-            case 2:
-                return new Color(220, 20, 60);
-            case 3:
-                return new Color(255, 230, 0);
-            case 4:
-                return new Color(0, 102, 204);
-            default:
-                return new Color(255, 140, 0);
-        }
+        return switch (i) {
+            case 1 -> new Color(50, 205, 50);
+            case 2 -> new Color(220, 20, 60);
+            case 3 -> new Color(255, 230, 0);
+            case 4 -> new Color(0, 102, 204);
+            default -> new Color(255, 140, 0);
+        };
     }
 }
