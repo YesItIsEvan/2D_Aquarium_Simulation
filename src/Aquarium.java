@@ -63,15 +63,15 @@ public class Aquarium extends JPanel implements Runnable {
 
         // Rock scape
         g.setColor(new Color(100, 100, 100)); // dark gray
-        int[] rockPointsX = new int[]{520,515,540,545,560,580,600,610,630,645,640};
-        int[] rockPointsY = new int[]{460,450,410,390,420,390,410,380,380,440,460};
-        g.fillPolygon(rockPointsX,rockPointsY,11);
+        int[] rockPointsX = new int[]{520,515,540,545,560,580,600,610,630,645,640,520};
+        int[] rockPointsY = new int[]{460,450,410,390,420,390,410,380,380,440,460,460};
+        g.fillPolygon(rockPointsX,rockPointsY,12);
 
-        // Rock holes (using background color)
+        // Rock holes
         g.setColor(new Color(50, 50, 60));
-        int[] holePointsX = new int[]{535,555,550};
-        int[] holePointsY = new int[]{435,425,450};
-        g.fillPolygon(holePointsX,holePointsY,3);
+        int[] holePointsX = new int[]{535,540,555,557,550,541,535};
+        int[] holePointsY = new int[]{435,430,425,440,450,444,435};
+        g.fillPolygon(holePointsX,holePointsY,7);
 
         // Little fish hiding in a hole
         g.setColor(Color.ORANGE);
@@ -83,22 +83,23 @@ public class Aquarium extends JPanel implements Runnable {
         int AnemoneStartingX = 107;
         g.setColor(new Color(255, 105, 180)); // hot pink
         for (int i = 1; i <= 27; i++) {
-            g.drawLine(AnemoneStartingX - i, 450, AnemoneStartingX - i + (int)(Math.sin((tick/2.0) * 0.1 + i) * 5), 415 - (int)Math.round(5*Math.sin(i/3.0)));
+            g.drawLine(AnemoneStartingX - i, 450, AnemoneStartingX - i + (int)(Math.sin((tick/2.0) * 0.1 + i) * 5), 420 - (int)Math.round(5*Math.sin(i/3.0)));
             if(i == 13) {
                 // Clownfish
                 g.setColor(Color.ORANGE);
                 int bobbing = (int) Math.round(3 * Math.sin(tick / 32.0));
-                g.fillOval(90, 425 + bobbing, 12, 6);
+                g.fillOval(90, 434 + bobbing, 12, 6);
                 g.setColor(Color.WHITE);
-                g.fillRect(94, 425 + bobbing, 2, 6);
+                g.fillRect(94, 434 + bobbing, 2, 6);
                 g.setColor(Color.BLACK);
-                g.fillOval(98, 427 + bobbing, 2, 2);
+                g.fillOval(98, 436 + bobbing, 2, 2);
                 g.setColor(new Color(255, 105, 180)); // hot pink
             }
         }
         g.setColor(new Color(139, 69, 19)); // brownish for rock/root base
-        g.fillOval(AnemoneStartingX -29,440,30,20);
-
+        int[] PointsX = new int[]{AnemoneStartingX+1,AnemoneStartingX-29,AnemoneStartingX-31,AnemoneStartingX+3};
+        int[] PointsY = new int[]{450,450,465,465};
+        g.fillPolygon(PointsX,PointsY,4);
 
         // More reef details could go here like shells, rocks, or bubbles
 
