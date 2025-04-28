@@ -12,18 +12,18 @@ public class Bubbles {
         y = Starting_Y;
         initialX = Starting_X;
         initialY = Starting_Y;
-        floatRate = 0.5;
+        floatRate = 0.25;
         Y_restriction = Y_Boundary;
     }
 
     public void floating(){
-        x += (3*Math.random())-1.5;
-        floatRate += 0.1*Math.random();
+        x += (1.5*Math.random())-.75;
+        floatRate += 0.03*Math.random();
         y -= floatRate;
         if(y<Y_restriction) {
             y = initialY;
             x = initialX;
-            floatRate = 0.5;
+            floatRate = 0.25;
         }
     }
 }

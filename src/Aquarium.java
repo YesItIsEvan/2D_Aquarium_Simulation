@@ -8,15 +8,18 @@ public class Aquarium extends JPanel implements Runnable {
     Thread thread;
     Fish[] fish = new Fish[20];
     Bubbles[] bubbles = new Bubbles[10];
-    int tick = 0;
+    double tick = 0;
+    int frameRate = 120;
+    Mouse mouse = new Mouse();
 
 
     public Aquarium() {
+        this.addMouseListener(mouse);
         thread = new Thread(this);
         for(int i=0;i<fish.length;i++)
             fish[i] = new Fish(100+(100*Math.random()),100+(100*Math.random()),690,450);
         for(int i = 0; i< bubbles.length; i++)
-            bubbles[i] = new Bubbles(620,385,-10);
+            bubbles[i] = new Bubbles(621,367,-10);
         thread.start();
     }
 
@@ -50,34 +53,11 @@ public class Aquarium extends JPanel implements Runnable {
             g.drawLine(baseX + i, 452-organicVariation, baseX + i + sway + (int)Math.round(3*Math.sin(tick/128.0)), 422+(4*(organicVariation)));
         }
 
-        // vent
-        g.setColor(new Color(60, 50, 50));
-        g.fillOval(610,377,20,6);
-        g.setColor(new Color(180, 70, 50));
-        g.fillOval(615,379,10,2);
-
-        // BUBBLES!!!!!!!!!!!!!!!!!!
-        g.setColor(Color.lightGray);
-        for(Bubbles bubbles : bubbles)
-            g.drawOval((int)Math.round(bubbles.x)-2,(int)Math.round(bubbles.y)-2,5,5);
-
-        // Rock scape
-        g.setColor(new Color(100, 100, 100)); // dark gray
-        int[] rockPointsX = new int[]{520,515,540,545,560,580,600,610,630,645,640,520};
-        int[] rockPointsY = new int[]{460,450,410,390,420,390,410,380,380,440,460,460};
-        g.fillPolygon(rockPointsX,rockPointsY,12);
-
-        // Rock holes
+        // Inner cave
         g.setColor(new Color(50, 50, 60));
-        int[] holePointsX = new int[]{535,540,555,557,550,541,535};
-        int[] holePointsY = new int[]{435,430,425,440,450,444,435};
-        g.fillPolygon(holePointsX,holePointsY,7);
-
-        // Little fish hiding in a hole
-        g.setColor(Color.ORANGE);
-        g.fillOval(595, 435, 12, 6); // small clown-like fish body
-        g.setColor(Color.WHITE);
-        g.fillRect(599, 435, 2, 6); // white stripe
+        int[] holePointsX = new int[]{499,497,519,548,568,581,591,599,609,634,655,678,683,651,583,516,499};
+        int[] holePointsY = new int[]{459,455,445,441,411,408,401,387,360,360,387,409,460,468,470,467,459};
+        g.fillPolygon(holePointsX,holePointsY,17);
 
         // Anemone on the left
         int AnemoneStartingX = 107;
@@ -128,14 +108,42 @@ public class Aquarium extends JPanel implements Runnable {
             if(fish[i].fish_facing < 0)
                 g.fillRect(x + 3, y + 2, 1, 2);
         }
+
+        // vent
+        g.setColor(new Color(60, 50, 50));
+        g.fillOval(609,357,25,6);
+        g.setColor(new Color(180, 70, 50));
+        g.fillOval(614,358,15,4);
+
+        // BUBBLES!!!!!!!!!!!!!!!!!!
+        g.setColor(Color.lightGray);
+        for(Bubbles bubbles : bubbles)
+            g.drawOval((int)Math.round(bubbles.x)-2,(int)Math.round(bubbles.y)-2,5,5);
+
+        // Rock scape
+        g.setColor(new Color(100, 100, 100)); // dark gray
+        int[] rockPointsX = new int[]{499,497,519,548,568,581,591,599,609,634,655,678,683,651,583,516,499,
+                                      576,571,576,582,595,597,585,576,
+                                      659,667,663,652,638,632,641,651,659,
+                                      576};
+        int[] rockPointsY = new int[]{459,455,445,441,411,408,401,387,360,360,387,409,460,468,470,467,459,
+                                      425,432,440,443,445,440,428,425,
+                                      416,421,428,432,433,425,419,418,416,
+                                      425};
+        g.fillPolygon(rockPointsX,rockPointsY,35);
     }
 
         public void run() {
-        long period = 1000 / 50;
+        long period = 1000 / 100;
         long beginTime = System.currentTimeMillis();
         long currentTime;
         while (true) {
-            tick++;
+            tick += 50.0 / frameRate;
+
+            if (mouse.event[m.mouse.clicked]){
+                System.out.println(new Point(mouse.x, mouse.y));
+            mouse.event[m.mouse.clicked] = false;
+            }
 
             Animate();
 
@@ -158,5 +166,27 @@ public class Aquarium extends JPanel implements Runnable {
             fish1.freeroam();
         for(Bubbles bubbles : bubbles)
             bubbles.floating();
+    }
+
+    public enum m {
+        mouse(0,1,2,3,4,5,6);
+
+        public final int pressed;
+        public final int released;
+        public final int entered;
+        public final int exited;
+        public final int clicked;
+        public final int dragged;
+        public final int moved;
+
+        m(int pressed, int released, int entered, int exited, int clicked, int dragged, int moved) {
+            this.pressed = pressed;
+            this.released = released;
+            this.entered = entered;
+            this.exited = exited;
+            this.clicked = clicked;
+            this.dragged = dragged;
+            this.moved = moved;
+        }
     }
 }

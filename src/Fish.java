@@ -26,10 +26,10 @@ public class Fish {
 
     public void freeroam(){
         if(repeatCycle == 0) {
-            fish_direction += (Math.random()-0.5)*Math.PI;
-            //fish_speed += Math.random()-0.5;
-            if(fish_speed > 2||fish_speed < 0)
-                fish_speed = 1;
+            fish_direction += ((0.5*Math.random())-0.25)*Math.PI;
+            fish_speed += 0.5*(Math.random()-0.5);
+            if(fish_speed > 1||fish_speed < 0)
+                fish_speed = 0.5;
             if(Math.cos(fish_direction)<0)
                 fish_facing = -1;
             else
